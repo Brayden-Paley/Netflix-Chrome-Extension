@@ -1,0 +1,21 @@
+{
+    "name": "NetflixImdb",
+    "description": "Add the IMDB ratings to netflix shows",
+    "version": "1",
+    "manifest_version": 2,
+    "permissions": [
+      "activeTab",
+      "storage"
+    ],
+    "browser_action": {},
+    "content_scripts": [
+      {
+        "matches": ["https://www.netflix.com/browse","http://www.netflix.com/browse"],
+        "js": ["main.js"]
+      }
+    ],
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    }
+}
