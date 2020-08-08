@@ -1,7 +1,11 @@
+//chrome.storage.local.clear(function() {
+//    var error = chrome.runtime.lastError;
+//    if (error) {
+//        console.error(error);
+//    }
+//});    
 
 var rows = document.getElementsByClassName("lolomoRow lolomoRow_title_card");
-console.log(rows);
-console.log(rows.length);
 for(var j = 0; j < rows.length; j++){
     var cards = "";
     var i = 0;
@@ -9,32 +13,42 @@ for(var j = 0; j < rows.length; j++){
     while(cards != null){
 
         var titles = cards.getElementsByClassName("ptrack-content")[0].innerText;
+        //var node = document.createElement('div');
         var titleString = document.createTextNode(titles);
-        console.log(titleString);
-        
-        chrome.storage.sync.get([titleString.toString()], function(result) {
-            if(typeof result.titleString === "undefined"){
-                console.log(titleString);
-                chrome.storage.sync.set({titleString: titleString}, function(){
-                cards.appendChild(titleString);
+        //cards.append(node);
+        //console.log(cards);
 
-                //console.log('set a value for ' + titleString.toString());
-                });
-            } else{
-                console.log('title already exists in storage, so we do not display ' + result.value +' again');           
-            }
+        keepValue(cards, titleString);
 
-        });
-            
-            
+
+
+
         i = i + 1;
         cards = document.getElementById('title-card-' + (j+1) + '-' + i);
     }
 }
-chrome.storage.sync.get(null, function(items) {
-    var allKeys = Object.keys(items);
-    console.log(allKeys);
-});
+
+function keepValue(keepCard, keepTitleString){
+    //console.log(keepTitleString);
+//    chrome.storage.local.get(null, function(items) {
+//                    var allKeys = Object.keys(items);
+//                    console.log(allKeys);
+//                });
+
+    chrome.storage.local.get([keepTitleString.textContent], function(result) {
+        //console.log(result[keepTitleString.textContent]);
+        if(result[keepTitleString.textContent] == undefined){
+            //console.log(result.keepTitleString);
+            chrome.storage.local.set({[keepTitleString.textContent]: 1}, function(){
+                keepCard.appendChild(keepTitleString);
+
+                //console.log('set a value for ' + titleString.toString());
+            });
+        } else{
+            console.log('title already exists in storage, so we do not display ' + result.key +' again');           
+        }
+    });
+}
 
 //var cards = document.getElementById('title-card-1-0');
 //var titles = cards.getElementsByClassName("ptrack-content")[0].innerText;
