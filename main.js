@@ -8,12 +8,12 @@ for(var j = 0; j < rows.length; j++){
 
         var titles = cards.getElementsByClassName("ptrack-content")[0].innerText;
         var titleString = document.createTextNode(titles);
-                console.log(cards.id);
-                if(cards.id === "title-" + j + "-" + i){
-                } else{
-                    keepValues(cards, titleString);
-                    cards.setAttribute("id", "title-" + j + "-" + i);
-                }
+        console.log(cards.id);
+        if(cards.id === "title-" + j + "-" + i){
+        } else{
+            keepValues(cards, titleString);
+            cards.setAttribute("id", "title-" + j + "-" + i);
+        }
 
         i = i + 1;
         cards = document.getElementById('title-card-' + (j+1) + '-' + i);
@@ -29,39 +29,25 @@ function keepValues(keepCard, keepTitleString){
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
             var jsonObject = JSON.parse(this.responseText);
-            //console.log(jsonObject.titles[0].id);
-
+            console.log(jsonObject);
             var data = null;
 
-            var xhr = new XMLHttpRequest();
-            xhr.withCredentials = false;
 
-            xhr.addEventListener("readystatechange", function () {
-                if (this.readyState === this.DONE) {
-                    var jsonObjectTitle = JSON.parse(this.responseText);
-                    var colour = "white";
-                    if(parseFloat(jsonObjectTitle.rating) > 7.5){
-                        colour = "green";
-                    } else if(parseFloat(jsonObjectTitle.rating) > 5.5){
-                        colour = "yellow";
-                    } else {
-                        colour = "red";
-                    }
-                    var textToAppend = ('IMDb Rating: ' + jsonObjectTitle.rating + '/10');
-                    keepCard.style.color = colour;
-                    keepCard.append(textToAppend);
-                }
-            });
-
-            xhr.open("GET", "https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/" + jsonObject.titles[0].id);
-            xhr.setRequestHeader("x-rapidapi-host", "imdb-internet-movie-database-unofficial.p.rapidapi.com");
-            xhr.setRequestHeader("x-rapidapi-key", "f405d039efmsh195ced3d4de15ffp1f7e62jsnce21185cd8a6");
-
-            xhr.send(data);
+            var colour = "white";
+            if(parseFloat(jsonObject.rating) > 7.5){
+                colour = "green";
+            } else if(parseFloat(jsonObject.rating) > 5.5){
+                colour = "yellow";
+            } else {
+                colour = "red";
+            }
+            var textToAppend = ('IMDb Rating: ' + jsonObject.rating + '/10');
+            keepCard.style.color = colour;
+            keepCard.append(textToAppend);
         }
     });
     //console.log(keepTitleString.textContent);
-    xhr.open("GET", "https://imdb-internet-movie-database-unofficial.p.rapidapi.com/search/" + keepTitleString.textContent, true);
+    xhr.open("GET", "https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/" + keepTitleString.textContent, true);
     xhr.setRequestHeader("x-rapidapi-host", "imdb-internet-movie-database-unofficial.p.rapidapi.com");
     xhr.setRequestHeader("x-rapidapi-key", "f405d039efmsh195ced3d4de15ffp1f7e62jsnce21185cd8a6");
 
