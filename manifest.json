@@ -7,15 +7,22 @@
       "activeTab",
       "storage"
     ],
-    "browser_action": {},
+    "browser_action": {
+        "default_icon": {
+            "16": "images/favicon_icon_NetflixExt16.png"
+        }
+    },
     "content_scripts": [
       {
         "matches": ["https://www.netflix.com/browse","http://www.netflix.com/browse"],
-        "js": ["main.js"]
+        "js": ["clearStorage.js"]
       }
     ],
     "background": {
         "scripts": ["background.js"],
         "persistent": false
+    },
+    "icons":{
+        "16": "images/favicon_icon_NetflixExt16.png"
     }
 }
