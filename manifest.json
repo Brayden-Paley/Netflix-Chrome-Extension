@@ -1,28 +1,31 @@
 {
-    "name": "NetflixImdb",
-    "description": "Add the IMDB ratings to netflix shows",
-    "version": "1",
+    "name": "Netflix IMDb Ratings",
+    "description": "Add the IMDb rating to Netflix shows!",
+    "version": "1.0",
     "manifest_version": 2,
     "permissions": [
+      "storage",
       "activeTab",
-      "storage"
+      "https://www.netflix.com/browse"
     ],
     "browser_action": {
         "default_icon": {
-            "16": "images/favicon_icon_NetflixExt16.png"
+            "16": "images/favicon_icon_NetflixExt16.png",
+            "32": "images/NetflixExt-32.png"
         }
     },
-    "content_scripts": [
-      {
-        "matches": ["https://www.netflix.com/browse","http://www.netflix.com/browse"],
-        "js": ["clearStorage.js"]
-      }
-    ],
     "background": {
         "scripts": ["background.js"],
         "persistent": false
     },
+    "content_scripts": [
+      {
+        "matches": ["https://www.netflix.com/browse","http://www.netflix.com/browse"],
+        "js": ["main.js"]
+      }
+    ],
     "icons":{
-        "16": "images/favicon_icon_NetflixExt16.png"
+        "16": "images/favicon_icon_NetflixExt16.png",
+        "32": "images/NetflixExt-32.png"
     }
 }

@@ -2,27 +2,27 @@
 var rows = document.getElementsByClassName("lolomoRow lolomoRow_title_card");
 for(var j = 0; j < rows.length; j++){
     var cards = "";
-    var i = 0;
-    cards = document.getElementById('title-card-' + (j+1) + '-' + 0);
-    while(cards != null){
-
-        var titles = cards.getElementsByClassName("ptrack-content")[0].innerText;
-        var titleString = document.createTextNode(titles);
-        if(cards.id === "title-" + j + "-" + i){
-        } else{
-            keepValues(cards, titleString);
-            cards.setAttribute("id", "title-" + j + "-" + i);
+    
+    for(var i = 0; i < 40; i++){
+        if(!(document.getElementById('title-card-' + (j+1) + '-' + i) == null)){
+            cards = document.getElementById('title-card-' + (j+1) + '-' + i);
+            
+            var titles = cards.getElementsByClassName("ptrack-content")[0].innerText;
+            var titleString = document.createTextNode(titles);
+            
+            if(cards.id === "title-" + j + "-" + i){
+            } else{
+                keepValues(cards, titleString);
+                cards.setAttribute("id", "title-" + j + "-" + i);
+            }
         }
-
-        i = i + 1;
-        cards = document.getElementById('title-card-' + (j+1) + '-' + i);
     }
 }
 
 function keepValues(keepCard, keepTitleString){
     chrome.storage.local.get([keepTitleString.textContent], function(result) {
         if(result[keepTitleString.textContent] == undefined){
-            console.log("everything is undefined :(")
+            console.log("undefined :(")
             var data = null;
 
             var xhr = new XMLHttpRequest();
@@ -48,7 +48,7 @@ function keepValues(keepCard, keepTitleString){
             xhr.setRequestHeader("x-rapidapi-key", "f405d039efmsh195ced3d4de15ffp1f7e62jsnce21185cd8a6");
 
             xhr.send(data);
-            
+
         } else{
             var colour = findColour(result[keepTitleString.textContent]);
             keepCard.style.color = colour;
